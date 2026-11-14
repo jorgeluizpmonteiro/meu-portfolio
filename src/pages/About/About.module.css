@@ -357,11 +357,10 @@
 }
 
 /*
- * Chip tracejado (padding 4/20). No hover (ou foco), uma pílula azul com o projeto que responde a essa
- * falha cobre o chip, alinhada à esquerda: a frase não muda de largura nem quebra de outro jeito.
+ * Chip tracejado (padding 4/20). No hover (ou foco), vira uma pílula azul com o projeto que responde a
+ * essa falha; o chip cresce e afasta os vizinhos, sem cobrir o texto deles.
  */
 .chip {
-  position: relative;
   display: inline-flex;
   align-items: center;
   padding: var(--space-4) var(--space-20);
@@ -371,28 +370,14 @@
   font: inherit;
   white-space: nowrap;
   cursor: pointer;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-out),
+    border-color var(--motion-duration-fast) var(--motion-easing-out),
+    color var(--motion-duration-fast) var(--motion-easing-out);
 }
 
 .chipHover {
-  position: absolute;
-  top: calc(-1 * var(--border-width-default));
-  bottom: calc(-1 * var(--border-width-default));
-  left: calc(-1 * var(--border-width-default));
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  padding: var(--space-4) calc(var(--space-20) + var(--border-width-default));
-  border-radius: var(--radius-full);
-  background-color: var(--background-action-primary);
-  color: var(--text-on-action-primary);
-  white-space: nowrap;
-  opacity: 0;
-  transform: scale(0.92);
-  transform-origin: 0 50%;
-  pointer-events: none;
-  transition:
-    opacity var(--motion-duration-medium) var(--motion-easing-out),
-    transform var(--motion-duration-medium) var(--motion-easing-out);
+  display: none;
 }
 
 .chip:focus-visible {
@@ -400,16 +385,40 @@
   outline-offset: 3px;
 }
 
+.chip:focus-visible,
+.chip:active {
+  border-style: solid;
+  border-color: var(--background-action-primary);
+  background-color: var(--background-action-primary);
+  color: var(--text-on-action-primary);
+}
+
+.chip:focus-visible .chipText,
+.chip:active .chipText {
+  display: none;
+}
+
 .chip:focus-visible .chipHover,
 .chip:active .chipHover {
-  opacity: 1;
-  transform: none;
+  display: inline;
+  animation: fade var(--motion-duration-medium) var(--motion-easing-out);
 }
 
 @media (hover: hover) {
+  .chip:hover {
+    border-style: solid;
+    border-color: var(--background-action-primary);
+    background-color: var(--background-action-primary);
+    color: var(--text-on-action-primary);
+  }
+
+  .chip:hover .chipText {
+    display: none;
+  }
+
   .chip:hover .chipHover {
-    opacity: 1;
-    transform: none;
+    display: inline;
+    animation: fade var(--motion-duration-medium) var(--motion-easing-out);
   }
 }
 
@@ -674,11 +683,8 @@
   font-weight: var(--typography-display-medium-font-weight);
   line-height: var(--typography-display-medium-line-height);
   letter-spacing: var(--typography-display-medium-letter-spacing);
-  transition: color var(--motion-duration-medium) var(--motion-easing-out);
 }
 
-/* No hover de um marco, o número fica azul como o marco atual */
-.milestone:hover .milestoneNumber,
 .current .milestoneNumber {
   color: var(--text-brand);
 }
@@ -1122,7 +1128,7 @@
   }
 
   .chipHover {
-    transition: none;
+    animation: none !important;
   }
 
   .proof,

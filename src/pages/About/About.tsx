@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import { Link } from 'react-router-dom'
 import bdaCover from '../../assets/about/bda.webp'
 import escutaCover from '../../assets/about/escuta.webp'
@@ -356,13 +356,34 @@ type ProofCardProps = {
   cardRef: (el: HTMLElement | null) => void
 }
 
-/** Cartão do acordeão — aberto (texto + capa) ou fechado (resumo com seta). Figma: Card / Escuta etc. */
+/** Tempo com o mouse parado sobre um cartão fechado antes de abri-lo (evita abrir os que o mouse só cruza) */
+const HOVER_DELAY_MS = 120
+
+/**
+ * Cartão do acordeão — aberto (texto + capa) ou fechado (resumo com seta). Figma: Card / Escuta etc.
+ * Com mouse, abre ao passar por cima; com toque ou teclado, ao tocar/ativar o cartão fechado.
+ */
 function ProofCard({ proof, open, collapsible, onOpen, cardRef }: ProofCardProps) {
   const url = caseUrl(proof.slug)
   const panelId = `prova-${proof.id}`
+  const hoverTimer = useRef(0)
+
+  useEffect(() => () => window.clearTimeout(hoverTimer.current), [])
+
+  const onPointerEnter = (e: PointerEvent) => {
+    if (!collapsible || open || e.pointerType !== 'mouse') return
+    hoverTimer.current = window.setTimeout(onOpen, HOVER_DELAY_MS)
+  }
+  const onPointerLeave = () => window.clearTimeout(hoverTimer.current)
 
   return (
-    <article ref={cardRef} className={`${styles.proof} ${open ? styles.proofOpen : ''}`} aria-labelledby={`${panelId}-titulo`}>
+    <article
+      ref={cardRef}
+      className={`${styles.proof} ${open ? styles.proofOpen : ''}`}
+      aria-labelledby={`${panelId}-titulo`}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+    >
       <div id={panelId} className={styles.proofPanel} inert={!open}>
         <div className={styles.proofContent}>
           <div className={styles.proofIdea}>
