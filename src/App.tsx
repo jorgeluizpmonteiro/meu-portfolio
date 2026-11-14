@@ -3,6 +3,7 @@ import { Route, Routes, useParams } from 'react-router-dom'
 import { Layout } from './components/Layout/Layout'
 import { NextCases } from './components/NextCases/NextCases'
 import { hasCasePage, projects } from './data/projects'
+import { About } from './pages/About/About'
 import { casepages } from './pages/cases'
 import { Contact } from './pages/Contact/Contact'
 import { Home } from './pages/Home/Home'
@@ -35,7 +36,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="projetos/:slug" element={<ProjectRoute />} />
-        <Route path="sobre" element={<SimplePage title="Sobre mim" text={IN_PROGRESS} />} />
+        <Route path="sobre" element={<About />} />
         <Route path="contato" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Route>
