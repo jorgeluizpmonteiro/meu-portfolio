@@ -4,12 +4,8 @@ export const site = {
   /** Foto do header (Figma: Header › “Avatar — Jorge Luiz”, node 106:7580). */
   avatar: '/images/avatar.webp',
   linkedinUrl: 'https://www.linkedin.com/in/jorgeluizpmonteiro',
-  /**
-   * Currículo em PDF (D-02). Enquanto for null, o botão CV fica escondido.
-   * Quando o arquivo existir: coloque em public/ (ex.: public/curriculo-jorge-luiz.pdf)
-   * e troque para '/curriculo-jorge-luiz.pdf'.
-   */
-  cvUrl: null as string | null,
+  /** Currículo em PDF (D-02), em public/. Para atualizar, substitua o arquivo mantendo o nome. */
+  cvUrl: '/curriculo-jorge-luiz.pdf' as string | null,
 }
 
 /**
