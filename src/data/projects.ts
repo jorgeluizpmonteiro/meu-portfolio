@@ -13,6 +13,7 @@
 import inovaLogo from '../assets/cases/inova-yq/logo.svg'
 import vizuLogo from '../assets/cases/vizu/logo.svg'
 import tiddoLogo from '../assets/cases/tiddo/logo.svg'
+import bdaSeal from '../assets/about/selo-bda.webp'
 
 export type ProjectStatus = 'published' | 'soon'
 
@@ -24,6 +25,8 @@ export type Project = {
   category: string
   cover: string
   coverAlt: string
+  /** Selo sobre a capa, preso ao topo à direita (ex.: Shortlist BDA) */
+  coverSeal?: { src: string; alt: string }
   status: ProjectStatus
   /** Logo e ano mostrados no header da página do case (Header Type=Project). */
   logo?: string
@@ -82,6 +85,16 @@ export const projects: Project[] = [
     status: 'published',
     logo: inovaLogo,
     year: '2025',
+  },
+  {
+    slug: 'fiarte',
+    title: 'Fiarte',
+    description: 'Um sistema para transmitir o artesanato cearense, criado junto com as mestras artesãs. Shortlist no BDA 2026.',
+    category: 'Product Design',
+    cover: '/images/projects/fiarte/cover.webp',
+    coverAlt: 'Mãos de uma rendeira trabalhando na almofada de renda de bilro',
+    coverSeal: { src: bdaSeal, alt: 'Selo Shortlist do 16º Prêmio Brasileiro de Design' },
+    status: 'soon',
   },
 ]
 

@@ -33,6 +33,7 @@ export function ProjectCard({ project, headingLevel: Heading = 'h3', className }
             />
           </div>
         )}
+        {project.coverSeal && <img className={styles.seal} src={project.coverSeal.src} alt={project.coverSeal.alt} />}
         <div className={styles.badges}>
           <span className={styles.badge}>{project.category}</span>
         </div>

@@ -43,6 +43,15 @@
   object-fit: cover;
 }
 
+/* Selo sobre a capa — Figma (Projeto — Fiarte, 422:22411): 46,6 × 94, no topo, 15,4 px da direita */
+.seal {
+  position: absolute;
+  top: 0;
+  right: calc(100% * 15.43 / 336);
+  width: 46.569px;
+  height: auto;
+}
+
 .badges {
   position: absolute;
   top: var(--space-xx-small);
